@@ -148,7 +148,7 @@ class Calculator extends Component {
             <OperatorKey active={operator === '*'} onClick={() => this.setOperator('*')}>×</OperatorKey>
             <OperatorKey active={operator === '-'} onClick={() => this.setOperator('-')}>-</OperatorKey>
             <OperatorKey active={operator === '+'} onClick={() => this.setOperator('+')}>+</OperatorKey>
-            <OperatorKey onClick={() => this.setOperator('+')}>=</OperatorKey>
+            <OperatorKey onClick={() => this.setOperator('=')}>=</OperatorKey>
 
         </Keypad>
       </Calc>
