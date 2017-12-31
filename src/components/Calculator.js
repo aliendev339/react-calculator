@@ -66,7 +66,8 @@ class Calculator extends Component {
   state = { 
     displayOutput: '0',
     isReset: true,
-    operator: null
+    operator: null,
+    prevNumber: null
   }
 
   appendDigit(digit) {
@@ -88,7 +89,8 @@ class Calculator extends Component {
     this.setState({
       displayOutput: '0',
       isReset: true,
-      operator: null
+      operator: null,
+      prevNumber: null
     })
   }
 
@@ -113,9 +115,37 @@ class Calculator extends Component {
   }
 
   setOperator = (op) => {
+    const { displayOutput } = this.state;
+    
     this.setState({
-      operator: op
+      operator: op,
+      prevNumber: displayOutput,
+      isReset: true
     });
+  }
+
+  operate = (op) => {
+    const { operator, displayOutput, prevNumber } = this.state;
+    if (operator) {
+      switch (operator) {
+        case '+': 
+          this.setState({
+            displayOutput: this.add(displayOutput, prevNumber),
+            prevNumber: this.add(displayOutput, prevNumber)
+          })
+          break;
+        default:
+          break;
+      }
+    }
+    
+    this.setOperator(op);
+  }
+
+  add = (num1, num2) => {
+    num1 = (typeof num1 === 'string') ? parseInt(num1) : num1;
+    num2 = (typeof num2 === 'string') ? parseInt(num2) : num2;
+    return num1 + num2;
   }
 
   render() {
@@ -144,11 +174,11 @@ class Calculator extends Component {
             <DigitKey onClick={() => this.appendDigit('9')} gridArea="nin">9</DigitKey>
             <DigitKey onClick={() => this.appendDigit('.')} gridArea="dec">.</DigitKey>
 
-            <OperatorKey active={operator === '/'} onClick={() => this.setOperator('/')}>÷</OperatorKey>
-            <OperatorKey active={operator === '*'} onClick={() => this.setOperator('*')}>×</OperatorKey>
-            <OperatorKey active={operator === '-'} onClick={() => this.setOperator('-')}>-</OperatorKey>
-            <OperatorKey active={operator === '+'} onClick={() => this.setOperator('+')}>+</OperatorKey>
-            <OperatorKey onClick={() => this.setOperator('=')}>=</OperatorKey>
+            <OperatorKey active={operator === '/'} onClick={() => this.operate('/')}>÷</OperatorKey>
+            <OperatorKey active={operator === '*'} onClick={() => this.operate('*')}>×</OperatorKey>
+            <OperatorKey active={operator === '-'} onClick={() => this.operate('-')}>-</OperatorKey>
+            <OperatorKey active={operator === '+'} onClick={() => this.operate('+')}>+</OperatorKey>
+            <OperatorKey onClick={() => this.operate('=')}>=</OperatorKey>
 
         </Keypad>
       </Calc>
