@@ -50,6 +50,7 @@ const Key = styled.button`
   padding: auto;
 `;
 const FunctionKey = styled(Key)`
+  background-color: lightgray;
   color: #222;
 `;
 const DigitKey = styled(Key)`
@@ -89,6 +90,26 @@ class Calculator extends Component {
     })
   }
 
+  changeSign = () => {
+    const { isReset, displayOutput } = this.state;
+
+    if (!isReset) {
+      this.setState({
+        displayOutput: displayOutput * -1
+      })
+    }
+  }
+
+  toPercent = () => {
+    const { isReset, displayOutput } = this.state;
+
+    if (!isReset) {
+      this.setState({
+        displayOutput: displayOutput * .01
+      })
+    }
+  }
+
   render() {
 
     const { displayOutput } = this.state;
@@ -100,8 +121,8 @@ class Calculator extends Component {
         <Keypad>
           
             <FunctionKey onClick={this.resetDigits}>AC</FunctionKey>
-            <FunctionKey>+/-</FunctionKey>
-            <FunctionKey>%</FunctionKey>
+            <FunctionKey onClick={this.changeSign}>±</FunctionKey>
+            <FunctionKey onClick={this.toPercent}>%</FunctionKey>
           
             <DigitKey onClick={() => this.appendDigit('0')} gridArea="zer">0</DigitKey>
             <DigitKey onClick={() => this.appendDigit('1')} gridArea="one">1</DigitKey>
@@ -115,8 +136,8 @@ class Calculator extends Component {
             <DigitKey onClick={() => this.appendDigit('9')} gridArea="nin">9</DigitKey>
             <DigitKey onClick={() => this.appendDigit('.')} gridArea="dec">.</DigitKey>
 
-            <OperatorKey>/</OperatorKey>
-            <OperatorKey>*</OperatorKey>
+            <OperatorKey>÷</OperatorKey>
+            <OperatorKey>×</OperatorKey>
             <OperatorKey>-</OperatorKey>
             <OperatorKey>+</OperatorKey>
             <OperatorKey>=</OperatorKey>
