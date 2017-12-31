@@ -58,14 +58,15 @@ const DigitKey = styled(Key)`
   color: white;
 `;
 const OperatorKey = styled(Key)`
-  background-color: orange;
-  color: white;
+  background-color: ${props => props.active ? 'white' : 'orange'};
+  color: ${props => props.active ? 'orange' : 'white'};
 `;
 
 class Calculator extends Component {
   state = { 
     displayOutput: '0',
-    isReset: true
+    isReset: true,
+    operator: null
   }
 
   appendDigit(digit) {
@@ -83,10 +84,11 @@ class Calculator extends Component {
     }
   }
 
-  resetDigits = () => {
+  reset = () => {
     this.setState({
       displayOutput: '0',
-      isReset: true
+      isReset: true,
+      operator: null
     })
   }
 
@@ -110,9 +112,15 @@ class Calculator extends Component {
     }
   }
 
+  setOperator = (op) => {
+    this.setState({
+      operator: op
+    });
+  }
+
   render() {
 
-    const { displayOutput } = this.state;
+    const { displayOutput, operator } = this.state;
     return (
       <Calc>
         <Display>
@@ -120,7 +128,7 @@ class Calculator extends Component {
         </Display>
         <Keypad>
           
-            <FunctionKey onClick={this.resetDigits}>AC</FunctionKey>
+            <FunctionKey onClick={this.reset}>AC</FunctionKey>
             <FunctionKey onClick={this.changeSign}>±</FunctionKey>
             <FunctionKey onClick={this.toPercent}>%</FunctionKey>
           
@@ -136,11 +144,11 @@ class Calculator extends Component {
             <DigitKey onClick={() => this.appendDigit('9')} gridArea="nin">9</DigitKey>
             <DigitKey onClick={() => this.appendDigit('.')} gridArea="dec">.</DigitKey>
 
-            <OperatorKey>÷</OperatorKey>
-            <OperatorKey>×</OperatorKey>
-            <OperatorKey>-</OperatorKey>
-            <OperatorKey>+</OperatorKey>
-            <OperatorKey>=</OperatorKey>
+            <OperatorKey active={operator === '/'} onClick={() => this.setOperator('/')}>÷</OperatorKey>
+            <OperatorKey active={operator === '*'} onClick={() => this.setOperator('*')}>×</OperatorKey>
+            <OperatorKey active={operator === '-'} onClick={() => this.setOperator('-')}>-</OperatorKey>
+            <OperatorKey active={operator === '+'} onClick={() => this.setOperator('+')}>+</OperatorKey>
+            <OperatorKey onClick={() => this.setOperator('+')}>=</OperatorKey>
 
         </Keypad>
       </Calc>
