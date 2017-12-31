@@ -62,7 +62,33 @@ const OperatorKey = styled(Key)`
 `;
 
 class Calculator extends Component {
-  state = { displayOutput: '0' }
+  state = { 
+    displayOutput: '0',
+    isReset: true
+  }
+
+  appendDigit(digit) {
+    const { displayOutput, isReset } = this.state;
+    if (!isReset) {
+      this.setState({
+        displayOutput: displayOutput + digit,
+        isReset: false
+      });
+    } else {
+      this.setState({
+        displayOutput: digit,
+        isReset: false
+      });
+    }
+  }
+
+  resetDigits = () => {
+    this.setState({
+      displayOutput: '0',
+      isReset: true
+    })
+  }
+
   render() {
 
     const { displayOutput } = this.state;
@@ -73,21 +99,21 @@ class Calculator extends Component {
         </Display>
         <Keypad>
           
-            <FunctionKey>AC</FunctionKey>
+            <FunctionKey onClick={this.resetDigits}>AC</FunctionKey>
             <FunctionKey>+/-</FunctionKey>
             <FunctionKey>%</FunctionKey>
           
-            <DigitKey gridArea="zer">0</DigitKey>
-            <DigitKey gridArea="one">1</DigitKey>
-            <DigitKey gridArea="two">2</DigitKey>
-            <DigitKey gridArea="thr">3</DigitKey>
-            <DigitKey gridArea="fou">4</DigitKey>
-            <DigitKey gridArea="fiv">5</DigitKey>
-            <DigitKey gridArea="six">6</DigitKey>
-            <DigitKey gridArea="sev">7</DigitKey>
-            <DigitKey gridArea="eig">8</DigitKey>
-            <DigitKey gridArea="nin">9</DigitKey>
-            <DigitKey gridArea="dec">.</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('0')} gridArea="zer">0</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('1')} gridArea="one">1</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('2')} gridArea="two">2</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('3')} gridArea="thr">3</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('4')} gridArea="fou">4</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('5')} gridArea="fiv">5</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('6')} gridArea="six">6</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('7')} gridArea="sev">7</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('8')} gridArea="eig">8</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('9')} gridArea="nin">9</DigitKey>
+            <DigitKey onClick={() => this.appendDigit('.')} gridArea="dec">.</DigitKey>
 
             <OperatorKey>/</OperatorKey>
             <OperatorKey>*</OperatorKey>
