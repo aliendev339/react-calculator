@@ -115,37 +115,79 @@ class Calculator extends Component {
   }
 
   setOperator = (op) => {
-    const { displayOutput } = this.state;
-    
     this.setState({
       operator: op,
-      prevNumber: displayOutput,
       isReset: true
+    });
+  }
+
+  setPrevious = (prev) => {
+    this.setState({
+      prevNumber: prev
     });
   }
 
   operate = (op) => {
     const { operator, displayOutput, prevNumber } = this.state;
     if (operator) {
+      let result = 0;
       switch (operator) {
         case '+': 
-          this.setState({
-            displayOutput: this.add(displayOutput, prevNumber),
-            prevNumber: this.add(displayOutput, prevNumber)
-          })
+          result = this.add(prevNumber, displayOutput);
+          break;
+        case '-': 
+          result = this.subtract(prevNumber, displayOutput);
+          break;
+        case '*': 
+          result = this.multiply(prevNumber, displayOutput);
+          break;
+        case '/': 
+          result = this.divide(prevNumber, displayOutput);
+          break;
+        case '=': 
+          result = this.divide(prevNumber, displayOutput);
           break;
         default:
           break;
       }
+
+      this.setState({ displayOutput: result });
+      this.setPrevious(result);
+      this.setOperator(op);
+      return;
     }
-    
+
+    this.setPrevious(displayOutput);
     this.setOperator(op);
   }
 
+  validateNumber = (num) => {
+    num = (typeof num === 'string') ? parseFloat(num) : num;
+    return num;
+  }
+
   add = (num1, num2) => {
-    num1 = (typeof num1 === 'string') ? parseInt(num1) : num1;
-    num2 = (typeof num2 === 'string') ? parseInt(num2) : num2;
-    return num1 + num2;
+    num1 = this.validateNumber(num1);
+    num2 = this.validateNumber(num2);
+    return (num1 + num2).toPrecision();
+  }
+
+  subtract = (num1, num2) => {
+    num1 = this.validateNumber(num1);
+    num2 = this.validateNumber(num2);
+    return (num1 - num2).toPrecision();
+  }
+
+  multiply = (num1, num2) => {
+    num1 = this.validateNumber(num1);
+    num2 = this.validateNumber(num2);
+    return (num1 * num2).toPrecision();
+  }
+
+  divide = (num1, num2) => {
+    num1 = this.validateNumber(num1);
+    num2 = this.validateNumber(num2);
+    return (num1 / num2).toPrecision();
   }
 
   render() {
