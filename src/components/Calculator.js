@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 
+/*
+ * TO-DO
+ * - Make calculator more responsive
+ * - Fix equals button
+ * - Add order of operations
+ * - Fix bugs
+ * - Polish
+*/
+
 const Calc = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,16 +59,29 @@ const Key = styled.button`
   padding: auto;
 `;
 const FunctionKey = styled(Key)`
-  background-color: lightgray;
+  background-color: #ccc;
   color: #222;
+
+  &:hover {
+    background-color: #eee;
+  }
 `;
 const DigitKey = styled(Key)`
-  background-color: grey;
+  background-color: #333;
   color: white;
+
+  &:hover {
+    background-color: #444;
+  }
 `;
 const OperatorKey = styled(Key)`
-  background-color: ${props => props.active ? 'white' : 'orange'};
-  color: ${props => props.active ? 'orange' : 'white'};
+  background-color: ${props => props.active ? '#fff' : '#ffa500'};
+  color: ${props => props.active ? '#ffa500' : '#fff'};
+
+  &:hover {
+    background-color: ${props => props.active ? '' : '#fff'};
+    color: ${props => props.active ? '' : '#ffa500'};
+  }
 `;
 
 class Calculator extends Component {
@@ -145,7 +167,6 @@ class Calculator extends Component {
           result = this.divide(prevNumber, displayOutput);
           break;
         case '=': 
-          result = this.divide(prevNumber, displayOutput);
           break;
         default:
           break;
