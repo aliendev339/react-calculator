@@ -4,6 +4,12 @@ This is essentially a mock-up of the current iOS calculator built with React and
 
 ## Available Scripts
 
+After downloading/cloning, run:
+
+### `npm install`
+
+This will install all necessary dependicies to run the project.
+
 In the project directory, you can run:
 
 ### `npm start`
