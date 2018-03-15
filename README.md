@@ -1,6 +1,6 @@
 # React iOS Calculator
 
-This is essentially a mock-up of the current iOS calculator built with React and styled-components for the css.
+This is essentially a mock-up of the current iOS calculator built with React and styled-components.
 
 ## Available Scripts
 
